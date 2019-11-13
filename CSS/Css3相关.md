@@ -1,8 +1,22 @@
+## Transition（过渡）
+
+### transition：
+
+简写：transition：property duration timing-function delay;
+
+property 设置过渡效果的CSS名称
+
+duration 完成过渡效果需要多少秒或毫秒
+
+function 速度效果曲线
+
+delay 过渡效果何时开始
+
 ##  Transform 图形转换（变形）
 
 可实现元素的移动、旋转、缩放等效果
 
-### transform ：
+### transform：
 
 - translate
 
@@ -35,6 +49,16 @@ transform: rotate(0.45return)
 transform: scale(x, y);
 transform: scaleX();
 transform: scaleY();
+```
+
+- skew
+
+  x, y 倾斜角度
+
+```css
+transform: skewX(45deg);
+transform: skewY(45deg)
+transform: skew(x,y)
 ```
 
 ### transform-origin：
