@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  .steps {
+    background-color: #f1f1f1;
+    background: url('./img/step1.png') no-repeat;
+    background-position: 0 0;
+    width: 88px;
+    height: 88px;
+    transform: rotate(90deg);
+
+  }
+
+  .steps:hover {
+    animation: moveBack 1s steps(10) both infinite alternate;
+  }
+
+  .parent2 {
+    transition: all 3s linear;
+  }
+
+  .parent2:hover {
+    transform: translate(1000px, -200px);
+  }
+
+  .steps2 {
+    background: url('./img/step2.png') no-repeat;
+    background-position: 0 0;
+    width: 90px;
+    height: 54px;
+    animation: moveBack2 .3s steps(6) both infinite;
+  }
+
+
+
+  @keyframes moveBack {
+    0% {
+      background-position: 0 0;
+    }
+
+    100% {
+      background-position: 0 -2640px;
+    }
+  }
+
+  @keyframes moveBack2 {
+    0% {
+      background-position: 0 0;
+    }
+
+    100% {
+      background-position: -533px 0;
+    }
+  }
+</style>
+
+<body>
+  <h1>Animation</h1>
+  <h3>Steps</h3>
+  <div class="steps"></div>
+  <div class="parent2">
+    <div class="steps2"></div>
+  </div>
+</body>
+
+</html>
