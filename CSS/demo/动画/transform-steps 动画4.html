@@ -26,35 +26,41 @@
     width: 200px;
     height: 260px;
     line-height: 260px;
-    background: powderblue;
+    background: #f1f1f1;
     font-size: 50px;
     color: #fff;
     text-align: center;
     margin: 100px auto;
     left: 300px;
     position: absolute;
-    border-radius: 10px;
+    box-shadow: 0 0 30px #ccc;
   }
 
   .book div:first-child {
-    background: yellowgreen;
+    background: #ccc;
     z-index: 1;
-    animation: rotate 3s ease infinite;
+    animation: rotate 3s ease 1 forwards;
+    border-radius: 10px 0 0 10px;
+    border-left: 5px solid #666;
+    border-right: 5px solid #fff;
+  }
+
+  .book div:last-child {
+    transform: translateX(100px);
+    border-radius: 0 10px 10px 0;
+    border-right: 5px solid #666;
+    border-left: 5px solid #fff;
+    top: 0
   }
 
   @keyframes rotate {
     to {
-      transform: rotate3d(0, 1, 0, 0) translate(-100px, 0);
+      transform: rotate3d(0, 1, 0, 0) translateX(-100px);
     }
 
     from {
-      transform: rotate3d(0, 1, 0, 180deg) translate(-100px, 0);
+      transform: rotate3d(0, 1, 0, 180deg) translateX(-100px);
     }
-  }
-
-  .book div:last-child {
-    transform: translate(100px, 0);
-    top: 0
   }
 </style>
 

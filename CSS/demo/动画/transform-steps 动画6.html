@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>transform-style</title>
+</head>
+<style>
+  body {
+    perspective: 1000px;
+  }
+
+  .main {
+    width: 200px;
+    height: 200px;
+    margin: 100px auto;
+    background: #f1f1f1;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 2s;
+  }
+
+  .child1,
+  .child2 {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 0
+  }
+
+  .child1 {
+    background: brown;
+  }
+
+  .child2 {
+    background: yellowgreen;
+    transform: rotateX(60deg);
+  }
+
+  .main:hover {
+    transform: rotateY(120deg);
+  }
+</style>
+
+<body>
+  <div class="main">
+    <div class="child1"></div>
+    <div class="child2"></div>
+  </div>
+</body>
+
+</html>

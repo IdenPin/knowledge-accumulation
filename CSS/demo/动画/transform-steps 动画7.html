@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>翻转盒子</title>
+</head>
+<style>
+  body {
+    perspective: 600px;
+  }
+
+  .box {
+    transform-style: preserve-3d;
+    height: 200px;
+    width: 200px;
+    margin: 100px auto;
+    position: relative;
+    transition: all 1s;
+  }
+
+  .box:hover {
+    transform: rotateY(180deg);
+  }
+
+  .front,
+  .back {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 200px;
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+    backface-visibility: hidden;
+  }
+
+  .front {
+    background-color: pink;
+    z-index: 1;
+  }
+
+  .back {
+    background-color: purple;
+    transform: rotateY(180deg);
+  }
+</style>
+
+<body>
+  <div class="box">
+    <div class="front">front</div>
+    <div class="back">back</div>
+  </div>
+</body>
+
+</html>
