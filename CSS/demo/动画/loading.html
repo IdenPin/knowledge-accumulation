@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>盒子内运动</title>
+  <style>
+    * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1b2a49;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      height: 100vh;
+    }
+
+    .loading {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border-top: 6px solid #7ed6df;
+      position: relative;
+      transform: rotate(0);
+      animation: rotate1 3s linear infinite;
+    }
+
+    .loading::before,
+    .loading::after {
+      content: '';
+      display: block;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      position: absolute;
+      top: -6px;
+      left: 0;
+    }
+
+    .loading::after {
+      border-top: 6px solid #e056fd;
+      transform: rotate(120deg);
+    }
+
+    .loading::before {
+      border-top: 6px solid #686de0;
+      transform: rotate(240deg);
+    }
+
+    .loading span {
+      line-height: 200px;
+      text-align: center;
+      display: block;
+      animation: rotate2 3s linear infinite;
+    }
+
+    @keyframes rotate1 {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes rotate2 {
+      to {
+        transform: rotate(-360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading"><span>Loading ...</span></div>
+</body>
+
+</html>
