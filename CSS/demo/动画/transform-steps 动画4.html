@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>book</title>
+</head>
+<style>
+  * {
+    margin: 0;
+  }
+
+  .book {
+    width: 800px;
+    height: 600px;
+    margin: 100px auto;
+    /* background-color: #f1f1f1; */
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 800px;
+  }
+
+  [class^='page'] {
+    width: 200px;
+    height: 260px;
+    line-height: 260px;
+    background: powderblue;
+    font-size: 50px;
+    color: #fff;
+    text-align: center;
+    margin: 100px auto;
+    left: 300px;
+    position: absolute;
+    border-radius: 10px;
+  }
+
+  .book div:first-child {
+    background: yellowgreen;
+    z-index: 1;
+    animation: rotate 3s ease infinite;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate3d(0, 1, 0, 0) translate(-100px, 0);
+    }
+
+    from {
+      transform: rotate3d(0, 1, 0, 180deg) translate(-100px, 0);
+    }
+  }
+
+  .book div:last-child {
+    transform: translate(100px, 0);
+    top: 0
+  }
+</style>
+
+<body>
+  <div class="book">
+    <div class="page1">上</div>
+    <div class="page2">下</div>
+  </div>
+</body>
+
+</html>
