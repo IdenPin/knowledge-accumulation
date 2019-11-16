@@ -9,6 +9,7 @@
   <style>
     * {
       margin: 0;
+      box-sizing: border-box;
     }
 
     body {
@@ -23,7 +24,8 @@
       justify-content: center;
       position: relative;
       transform-style: preserve-3d;
-      animation: rotate3DStyle 2s linear infinite;
+      transform: rotateY(-300deg);
+      animation: rotate3DStyle 4s linear infinite;
     }
 
     @keyframes rotate3DStyle {
@@ -32,11 +34,11 @@
       }
 
       100% {
-        transform: rotate3d(10, 10, 0, 360deg);
+        transform: rotate3d(1, 1, 0, 360deg);
       }
     }
 
-    .box div {
+    .box [class^='position-'] {
       width: 100px;
       height: 100px;
       line-height: 100px;
@@ -45,37 +47,71 @@
       color: #fff;
       position: absolute;
       border-radius: 10px;
-      opacity: .9;
+      /* opacity: .9; */
     }
 
-    .front {
+    .position-front {
       background-color: burlywood;
       transform: translateZ(50px);
     }
 
-    .back {
+    .position-back {
       background-color: aqua;
-      transform: translateZ(-50px);
+      transform: translateZ(-50px) rotateY(180deg);
     }
 
-    .top {
+    .position-top {
       background-color: orchid;
       transform: translateY(-50px) rotateX(90deg);
     }
 
-    .bottom {
+    .position-bottom {
       background-color: olive;
       transform: translateY(50px) rotateX(-90deg);
     }
 
-    .left {
+    .position-left {
       background-color: blueviolet;
       transform: translateX(-50px) rotateY(-90deg);
     }
 
-    .right {
+    .position-right {
       background-color: yellowgreen;
       transform: translateX(50px) rotateY(90deg);
+    }
+
+    .inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px;
+    }
+
+    .inner .dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+
+    .four {
+      flex-wrap: wrap;
+      padding: 20px;
+
+    }
+
+    .four .dot {
+      margin: 3px;
+    }
+
+    .six {
+      flex-wrap: wrap;
+      padding: 30px 20px;
+    }
+
+    .six .dot {
+      margin: 2px;
     }
   </style>
 </head>
@@ -84,12 +120,51 @@
 
   <div class="box">
 
-    <div class="front">1</div>
-    <div class="back">2</div>
-    <div class="top">3</div>
-    <div class="bottom">4</div>
-    <div class="left">5</div>
-    <div class="right">6</div>
+    <div class="position-front">
+      <div class="inner">
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="position-back">
+      <div class="inner">
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="position-top">
+      <div class="inner four">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="position-bottom">
+      <div class="inner four">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="position-left">
+      <div class="inner five">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <!-- <div class="dot"></div> -->
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="position-right">
+      <div class="inner six">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
   </div>
 
 
