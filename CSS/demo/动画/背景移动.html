@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>极光</title>
+  <style>
+    * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      background: #333;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+
+
+    .mountain {
+      position: relative;
+      animation: move-mountain 20s linear infinite;
+      width: 7680px;
+      overflow: hidden;
+      height: 336px;
+    }
+
+
+    .inner-mountain {
+      height: 336px;
+      background: url('./img/move-bg/baidu-m1.png') no-repeat;
+      float: left;
+      width: 50%;
+      height: 300px;
+    }
+
+    @keyframes move-mountain {
+      0% {
+        left: 0;
+      }
+
+      100% {
+        left: -3840px;
+      }
+    }
+
+
+
+    [class^='light-'] {
+      width: 640px;
+      margin: 0 auto 100px;
+      height: 352px;
+      /* opacity: 0; */
+    }
+
+    .light-box {
+      position: relative;
+    }
+
+    .light-1 {
+      background: url('./img/move-bg/baidu-l1.png') no-repeat;
+      opacity: 1;
+
+    }
+
+    .light-2 {
+      background: url('./img/move-bg/baidu-l2.png') no-repeat;
+      opacity: 0;
+
+    }
+
+    .light-3 {
+      background: url('./img/move-bg/baidu-l3.png') no-repeat;
+      opacity: 0;
+
+    }
+
+    .light-4 {
+      background: url('./img/move-bg/baidu-l4.png') no-repeat;
+      opacity: 0;
+
+    }
+
+    .light-5 {
+      background: url('./img/move-bg/baidu-l5.png') no-repeat;
+      opacity: 0;
+
+    }
+
+
+
+    .bg-bear {
+      position: relative;
+      width: 200px;
+      height: 100px;
+      background: url('./img/move-bg/baidu1.png');
+      animation: move-bear .8s steps(8) infinite forwards,
+        move-ip 5s forwards
+    }
+
+    @keyframes move-ip {
+      0% {
+        left: 0;
+      }
+
+      100% {
+        left: 40%;
+      }
+    }
+
+    @keyframes move-bear {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: -1600px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="light-box">
+      <div class="light-1"></div>
+      <div class="light-2"></div>
+      <div class="light-3"></div>
+      <div class="light-4"></div>
+      <div class="light-5"></div>
+    </div>
+    <div class="mountain">
+      <div class="inner-mountain"></div>
+      <div class="inner-mountain"></div>
+    </div>
+    <div class="run-bear">
+      <div class="bg-bear"></div>
+    </div>
+  </div>
+
+</body>
+
+</html>
