@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    html {
+      font-size: 20px;
+    }
+
+    .bigger {
+      font-size: 2rem;
+    }
+
+    .biggest {
+      font-size: 4rem;
+    }
+
+    .font-shorthand {
+      font: italic bold 5rem/1.2 Arial, sans-serif;
+    }
+
+    .padding-shorthand {
+      border: 1px red solid;
+      margin: 3rem;
+      padding: 5rem;
+    }
+
+    .pseudo-class {
+      line-height: 6rem;
+    }
+
+    .pseudo-class:hover {
+      cursor: pointer;
+      font-size: 5rem;
+    }
+
+    .pseudo-element:after {
+      content: '这是伪元素元素';
+      line-height: 20rem;
+      font-size: 5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div>原生字体</div>
+  <div class="bigger">较大字体</div>
+  <div class="biggest">最大字体</div>
+  <div class="font-shorthand">font简写</div>
+  <div class="padding-shorthand">margin 和 padding 简写</div>
+  <div class="pseudo-class">伪类</div>
+  <div class="pseudo-element">伪元素</div>
+
+
+  <div>
+    兼容性：
+    使用rem作为单位时的浏览器兼容如图 3所示。需要注意的是，IE9 / IE10 不支持font属性简写时使用rem指定字体大小，IE9 / IE1 / IE11不支持伪元素的line-height属性使用rem作为单位。
+  </div>
+</body>
+
+</html>
