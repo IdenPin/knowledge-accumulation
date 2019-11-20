@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>线形滚动菜单</title>
+  <style>
+    * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f1f1f1;
+    }
+
+    .box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn {
+      width: 220px;
+      text-align: center;
+      line-height: 40px;
+      color: #333;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .btn::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      transition: all .3s ease;
+      border-bottom: 2px solid transparent;
+    }
+
+    .wrap:hover .btn::after {
+      width: 100%;
+      border-bottom: 2px solid #800080;
+    }
+
+    .wrap .btn::after {
+      border-bottom: none;
+    }
+
+    .wrap .bg::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      transition: all .3s ease;
+      background: transparent;
+    }
+
+    .wrap:hover .bg::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transition: all .3s ease;
+      background: burlywood;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="wrap">
+      <div class="btn">点我</div>
+    </div>
+
+    <div class="wrap">
+      <div class="btn bg">点我</div>
+    </div>
+  </div>
+</body>
+
+</html>
