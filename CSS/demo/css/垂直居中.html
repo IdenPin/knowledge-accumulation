@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>垂直居中布局</title>
+  <!-- # browser-sync start --server --files "**/*.css, **/*.html" -->
+</head>
+
+<body>
+  <h3>已知宽高</h3>
+  <p>父：relative、子：absolute + 负margin + 50%</p>
+  <div style="position: relative; width: 400px;height:300px;margin: 0 auto;background: #f1f1f1">
+    <div style="
+    width: 100px;height: 100px; border: 1px solid #333;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    "></div>
+  </div>
+  <p>absolute + calc</p>
+  <div style="position:relative;width: 400px;height:300px;margin: 0 auto;background: #f1f1f1">
+    <div style="
+      width: 100px;height: 100px; border: 1px solid #333;
+      position: absolute;
+      left: calc((400px - 100px) / 2);
+      top: calc((300px - 100px) / 2)
+      "></div>
+  </div>
+  <p>flex 可用于用已知或未知宽高</p>
+  <div style="width: 400px;height:300px;margin: 0 auto;background: #f1f1f1;
+  display: flex;align-items: center; justify-content: center;
+  ">
+    <div style="width: 100px;height: 100px; border: 1px solid #333;
+      "></div>
+  </div>
+  <hr>
+  <h3>未知宽高</h3>
+  <p>transform</p>
+  <div style="position: relative; width: 400px;height:300px;margin: 0 auto;background: #f1f1f1">
+    <span style="border: 1px solid #333;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    ">看我</span>
+  </div>
+  <p>grid</p>
+  <div style="display: grid; width: 400px;height:300px;margin: 0 auto;background: #f1f1f1">
+    <span style="border: 1px solid #333;
+      align-self: center;
+      justify-self: center;
+      ">看我</span>
+  </div>
+</body>
+
+</html>
