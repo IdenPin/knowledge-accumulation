@@ -40,3 +40,4 @@
 多边形：<polygon points="      "  style=" "/>
 折线：<polyline points="    "  style=" "/> //注意需把fill设成none
 ```
+
