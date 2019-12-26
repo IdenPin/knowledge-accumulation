@@ -131,6 +131,8 @@ function Vue(options = {}) {
       }
     })
   }
+  // 编译
+  new Compile(this.$options.el, this)
 }
 
 
@@ -160,6 +162,43 @@ function observe(data) {
     return false
   }
   new Observe(data)
+}
+
+// 编译
+function Compile(el, vm){
+  vm.$el = document.querySelector(el)
+  // 操作内存、节省开销
+  let fragment = document.createDocumentFragment()
+  while (child = vm.$el.firstChild) {
+    // 将el中的内容放入内存中
+    fragment.appendChild(child)
+  }
+
+  // 对el里面的内容进行替换
+  function replaceFrag(frag) {
+    Array.from(frag.childNodes).forEach( node => {
+      let txt = node.textContent
+      let reg = /\{\{(.*?)\}\}/g
+      if(node.nodeType === 3 && reg.test(txt)) {
+        // 匹配到的第一个分组 如： a.b, c
+        console.log(RegExp.$1);
+        let arr = RegExp.$1.split('.')
+        let val = vm
+        arr.forEach(key => {
+          // this.a.b
+          val = val[key]
+        })
+        node.textContent = txt.replace(reg, val).trim()
+      }
+      // 如果还有子节点， 继续递归
+      if(node.childNodes && node.childNodes.length) {
+        replace(node)
+      }
+    })
+  }
+
+  replace(fragment)
+  vm.$el.appendChild(fragment)
 }
 
 
