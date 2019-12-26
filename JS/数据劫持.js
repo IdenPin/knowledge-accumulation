@@ -185,7 +185,6 @@ function Compile(el, vm){
         let arr = RegExp.$1.split('.')
         let val = vm
         arr.forEach(key => {
-          // this.a.b
           val = val[key]
         })
         node.textContent = txt.replace(reg, val).trim()
@@ -200,6 +199,37 @@ function Compile(el, vm){
   replace(fragment)
   vm.$el.appendChild(fragment)
 }
+
+
+// 发布订阅模式
+function Dep() {
+  this.subs = []
+}
+
+// 订阅
+Dep.prototype = {
+  // 订阅事件
+  addSub(fn) {
+    this.subs.push(fn)
+  },
+  notify() {
+    // 绑定的方法，给所有订阅的事件添加一个update方法
+    this.subs.forEach(sub => sub.update())
+  }
+}
+
+// 发布
+function Watcher(fn) {
+  this.fn = fn
+}
+Watcher.prototype.update = function() {
+  this.fn()
+}
+
+
+
+
+
 
 
 var app = new Vue({
