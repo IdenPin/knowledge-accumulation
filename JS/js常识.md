@@ -5,3 +5,24 @@
   避免Dom渲染冲突
 - 事件轮询是什么
   同步代码直接执行，异步函数先放在异步队列中，待所有同步函数执行完毕，轮询执行异步队列的函数
+- promise 最早是从来个库演变过来的
+  promise then 的写法最早是从jquery1.5之后 deferred 演变来的，只能从写法上杜绝了callback 这种形式，它是一种语法糖，但是解耦了代码。对扩展开放，对修改封闭
+
+- css 加载会阻塞 dom 渲染吗？
+  css 加载不会阻塞 dom 树解析，但是会阻塞 dom 树渲染，css加载会阻塞后面js语句的执行
+
+  ![dom渲染流程](./webkit-render.png)
+
+- 浏览器渲染页面会执行那几个事件？
+     
+  DOMContentLoaded 和 onLoad 区别在于,load 应该仅用于检测一个完全加载的页面，当一个资源及其依赖资源已完成加载时，将触发load事件。而DOMContentLoaded事件被触发，无需等待样式表、图像和子框架的完成加载。意思是HTML下载、解析完毕之后就触发
+
+    
+- Webpack热更新实现原理？
+  1. Webpack编译期，为需要热更新的 entry 注入热更新代码(EventSource通信)
+  2. 页面首次打开后，服务端与客户端通过 EventSource 建立通信渠道，把下一次的 hash 返回前端
+  3. 客户端获取到hash，这个hash将作为下一次请求服务端 hot-update.js 和 hot-update.json的hash
+  4. 修改页面代码后，Webpack 监听到文件修改后，开始编译，编译完成后，发送 build 消息给客户端
+  5. 客户端获取到hash，成功后客户端构造hot-update.js script链接，然后插入主文档
+  6. hot-update.js 插入成功后，执行hotAPI 的 createRecord 和 reload方法，获取到 Vue 组件的 render方法，重新 render 组件， 继而实现 UI 无刷新更新。
+
