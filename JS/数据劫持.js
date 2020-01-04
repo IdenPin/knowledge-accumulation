@@ -346,7 +346,12 @@ function Compile(el, vm) {
         arr.forEach(key => {
           val = val[key]
         })
-        node.textContent = txt.replace(reg, val).trim()
+        node.textContent = txt.replace(reg, (matched, placeholder) => {
+          new Watcher(vm, placeholder, replaceTxt);   // 监听变化，进行匹配替换内容
+          return placeholder.split('.').reduce((val, key) => {
+            return val[key];
+          }, vm);
+        })
         new Watcher(vm, RegExp.$1, newVal => {
           node.textContent = txt.replace(reg, newVal).trim()
         })
@@ -363,7 +368,10 @@ function Compile(el, vm) {
 }
 
 
-
+// 通过Object.defineProperty的get和set进行数据劫持
+// 通过遍历data数据进行数据代理到this上
+// 通过{ { } } 对数据进行编译
+// 通过发布订阅模式实现数据与视图同步
 
 
 
