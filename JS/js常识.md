@@ -26,3 +26,5 @@
   5. 客户端获取到hash，成功后客户端构造hot-update.js script链接，然后插入主文档
   6. hot-update.js 插入成功后，执行hotAPI 的 createRecord 和 reload方法，获取到 Vue 组件的 render方法，重新 render 组件， 继而实现 UI 无刷新更新。
 
+- HTTP1.0 和 HTTP1.1的区别
+  HTTP1.0 默认是短连接，可以长连接，但是需要设置header connection :Keep_Alive。 HTTP1.1默认是长连接
