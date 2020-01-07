@@ -26,5 +26,20 @@
   5. 客户端获取到hash，成功后客户端构造hot-update.js script链接，然后插入主文档
   6. hot-update.js 插入成功后，执行hotAPI 的 createRecord 和 reload方法，获取到 Vue 组件的 render方法，重新 render 组件， 继而实现 UI 无刷新更新。
 
-- HTTP1.0 和 HTTP1.1的区别
+- HTTP1.0 和 HTTP1.1的区别 ？
   HTTP1.0 默认是短连接，可以长连接，但是需要设置header connection :Keep_Alive。 HTTP1.1默认是长连接
+
+- HTTP1.0、HTTP1.1 和 HTTP2.0 的区别
+  1. HTTP2.0支持二进制传输数据，更加安全快捷，而HTTP1.0，HTTP1.1只支持文本
+  2. HTTP2.0实现了多路复用，更加快捷
+  3. HTTP2.0压缩了header
+  4. HTTP2.0支持服务'主动'给客户端缓存发送数据
+
+- TCP 和 UDP 的区别
+  1. TCP 是面向链接的服务，而 UDP 是无连接的，既发送数据之前不需要简历链接
+  2. TCP 提供可靠交付服务，无差错，不丢失，不重复，按时到达，而UDP提供尽力而为交付服务，不保证可靠交付
+  3. TCP 面向字节流，而 UDP 面向报文
+  4. TCP 具有拥塞控制，力求使每条 TCP 链接公平的享用网络资源。UDP 没有拥塞控制
+  5. TCP 连接只能是点到点，而 UDP 支持一对一，一对多，多对一和多对多的交互通信
+  6. TCP 首部开销20字节，UDP 首部开销8字节
+  7. TCP 的逻辑通信信道是全双工可靠信道，而UDP是不可靠信道
