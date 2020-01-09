@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>天地图</title>
+  <script type="text/javascript" src="http://api.tianditu.gov.cn/api?v=3.0&tk=6ac2a6b6280448eba6065fb2f48c12b9"></script>
+</head>
+<body>
+    <div class="tab-content">
+      <div class="h85">
+          <div class="addForms">
+              <label class="form-label"><span class="required">*</span>中心经度:</label>
+              <input name="psBaseInfoEntity.baseEntity.longitude" class="w200 mr8" type="hidden" value="115.748055">
+              <input id="longituded" type="text" class="w50 h20 mr5 validatebox-text" value="" data-valid="Longitude_du required" data-tip="度必须为73(包含73)~135之间的整数">°
+              <input id="longitudef" type="text" class="w50 h20 mr5 validatebox-text" value="" data-valid="Longitude_fen required" data-tip="分必须为0(包含0)~60之间的整数">'
+              <input id="longitudem" type="text" class="w50 h20 mr5 validatebox-text" value="" data-valid="Longitude_miao required" data-tip="秒必须为0(包含0)~60之间的整数或2位小数">"
+              <label class="form-label ml66"><span class="required">*</span>中心纬度:</label>
+              <input name="psBaseInfoEntity.baseEntity.latitude" class="w200" type="hidden" value="40.009167">
+              <input id="latituded" type="text" class="w50 h20 mr5 validatebox-text" value="" data-valid="Latitude_du required" data-tip="度必须为4(包含4)~53之间的整数">°
+              <input id="latitudef" type="text" class="w50 h20 mr5 validatebox-text" value="" data-valid="Latitude_fen required" data-tip="分必须为0(包含0)~60之间的整数">'
+              <input id="latitudem" type="text" class="w50 h20 mr5 validatebox-text" value="" data-valid="Latitude_miao required" data-tip="秒必须为0(包含0)~60之间的整数或2位小数">" <input id="location" value="按钮" type="button" class="bt-location ml10"><br>
+              <label class="form-label"><span class="required">*</span> 单位地址:</label>
+              <input name="psBaseInfoEntity.baseEntity.address" id="baseEntityAddress" class="w2 mt10 validatebox-text" type="text" value="" data-valid="len(1,200,100) namestr required">
+          </div>
+      </div> 
+      <div id="mapDiv" style="position:absolute;width:685px; height:236px"></div>
+  </div>
+  <script>
+    var map;
+    var pickup;
+    var marker
+    // 地图初始化
+    initMap('116.40969', '39.89945', 12)
+    // 初始化地图
+    function initMap(x, y, zoom) {
+      map = new TMap("mapDiv");
+      //设置显示地图的中心点和级别
+      map.centerAndZoom(new TLngLat(x,y),zoom);
+      map.enableHandleMouseScroll();
+      //启用连续缩放效果
+      map.enableContinuousZoom();
+      // 添加地图控件
+      addControl();
+      // 获取地图经纬度
+      getXy()
+    }
+    
+    // 添加地图控件
+    function addControl() {
+      var config = {
+        type:"TMAP_NAVIGATION_CONTROL_LARGE",   //缩放平移的显示类型
+        anchor:"TMAP_ANCHOR_TOP_LEFT",          //缩放平移控件显示的位置
+        offset:[0,0],                           //缩放平移控件的偏移值
+        showZoomInfo:true                       //是否显示级别提示信息，true表示显示，false表示隐藏。
+      };
+      //创建缩放平移控件对象
+      var control = new TNavigationControl(config);
+      //添加缩放平移控件
+      map.addControl(control);
+    }
+
+    // 获取经纬度
+    function getXy(){
+      var config = {
+          callback: function (data){
+              addMaker(data.getLng(), data.getLat())
+              document.getElementById('longituded').value = data.getLng()
+              document.getElementById('latituded').value = data.getLat()
+          }
+      };
+      pickup = new TCoordinatePickup(map, config);
+      pickup.addEvent();
+    }
+
+    // 方案一：点击地图获取经纬度
+    function addMaker(x, y) {
+        //创建标注对象
+        map.removeOverLay(marker);
+        marker = new TMarker(new TLngLat(x, y));
+        //向地图上添加标注
+        map.addOverLay(marker);
+    }
+
+    // 方案二：拖动地图获取中心点
+    TEvent.addListener(map,"moveend",function(lnglat){
+        alert(lnglat.getLng()+","+lnglat.getLat());
+    });
+
+
+
+    // 地图打点
+    document.getElementById('location').addEventListener('click', function() {
+      // 获取中心精度、中心纬度
+      var longituded = document.getElementById('longituded').value
+      var longitudef = document.getElementById('longitudef').value
+      var longitudem = document.getElementById('longitudem').value
+
+      var latituded = document.getElementById('latituded').value
+      var latitudef = document.getElementById('latitudef').value
+      var latitudem = document.getElementById('latitudem').value
+      
+      
+      // 116.411794,39.9068
+      addMaker(longituded,latituded);
+    })
+
+
+  </script>
+</body">
+</html>

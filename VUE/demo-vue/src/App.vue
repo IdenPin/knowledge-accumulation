@@ -66,10 +66,23 @@
   </a-layout>
 </template>
 <script>
+import http from '@/common/service'
 export default {
   data () {
     return {
       collapsed: false
+    }
+  },
+  mounted () {
+    this.fetchTest()
+  },
+  methods: {
+    async fetchTest () {
+      const data = await http({
+        url: '/getSms/',
+        method: 'post'
+      })
+      console.log('data', data)
     }
   }
 }

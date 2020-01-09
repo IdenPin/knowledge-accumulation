@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.4.10",
+    "axios": "^0.19.1",
     "bulma": "^0.8.0",
     "core-js": "^3.4.3",
     "lib-flexible": "^0.3.2",
