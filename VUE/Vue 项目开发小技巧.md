@@ -260,3 +260,38 @@ export default class SevMarketShop {
 import SevMarketShop from '@/api/market/shop'
 SevMarketShop.marketShopPage({}).then(() => {})
 ```
+序列化的意义是将复杂数据类型拍平，转化成 `a=123&name=pdeng`
+```js
+<template>
+  <div></div>
+</template>
+<script>
+import qs from 'qs'
+export default {
+  data() {
+    return {
+      foo : {
+        name: 'pdeng',
+        age: 20,
+        list: [1,3,4,2],
+      }
+    }
+  },
+  computed: {
+    QS() {
+      return qs.stringify(this.foo)
+    },
+    JSON() {
+      return JSON.stringify(this.foo)
+    }
+  },
+  mounted() {
+    window.console.log('data', this.foo)
+    window.console.log('JSON', this.JSON)
+    window.console.log('QS', this.QS)
+  }
+}
+</script>
+// JSON {"name":"pdeng","age":20,"list":[1,3,4,2]}
+// QS name=pdeng&age=20&list%5B0%5D=1&list%5B1%5D=3&list%5B2%5D=4&list%5B3%5D=2
+```
