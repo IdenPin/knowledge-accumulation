@@ -160,11 +160,103 @@ export default router
 #### Axios 请求分装和接口管理
 如果业务简单页面请求非常少直接使用axios也没有什么大影响。但是在一个大项目中对 `Axios` 进行二次封装尤为重要，想象下如果一个项目有上百个请求，突然有一天后端开发人员说需要在所有请求头加入一个字段，如果接口没有做统一管理，修改调整一百多个接口是多么痛苦的。所以我建议不管大项目小项axios请求二次封装是很有必要的。
 
-一般会在`@/utils`目录下创建一个`request.js`用来封装统一请求工具函数，`@/api`目录下用来存放接口协议。如果业务发在也建议将api文件夹下面的文件按照模块拆分。
-
+一般会在`@/utils`目录下创建一个`request.js`用来封装统一请求工具函数，`@/api`目录下用来存放接口协议。如果业务发在也建议将api文件夹下面的文件按照模块拆分。这个目录划分可以和路由文件夹保持一致
 ```html
 ├── moduleA
 ├── moduleB
 └── moduleC
+```
 
+封装 `request.js` 文件:
+```js
+import axios from 'axios'
+import qs from 'qs'
+const service = axios.create({
+  baseURL: process.env.BASE_API
+  timeout: 1000 * 30
+})
+
+
+// request 拦截器
+service.interceptors.request.use(
+  config => {
+    if(config.method === 'post') {
+      config.headers['post']['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+      config.data = qs.stringify(config.data)
+    }
+    // 设置统一的 header 等 ..
+    config.headers['Authorization'] = 'xxx'
+    return config
+  },
+  error => Promise.reject(error)
+)
+
+// response 拦截器
+service.interceptors.request.use(
+  response => {
+    return response.data
+  },
+  error => {
+    const data = error.response.data
+    return Promise.reject(data || error)
+  }
+) 
+
+
+export default service
+```
+
+接口协议文件：
+```js
+import request from '@/utils/request'
+// 方案一 
+export function marketShopCascade(data) {
+  return request({
+    url: '/sp/market/shop/cascade',
+    method: 'get',
+    params: data
+  })
+}
+
+// 生态区店铺联动
+export function marketShopSelector(data) {
+  return request({
+    url: '/sp/market/shop/selector',
+    method: 'get',
+    params: data
+  })
+}
+
+// 生态区商铺 列表
+export function marketShopPage(data) {
+  return request({
+    url: '/sp/market/shop/page',
+    method: 'get',
+    params: data
+  })
+}
+// 调用方式
+import { marketShopCascade, marketShopSelector, marketShopPage } from '@/api/market/shop'
+marketShopPage({}).then(() => {})
+
+// 方案二
+export default class SevMarketShop {
+  static marketShopPage(data) {
+    return request({
+      url: '/sp/market/shop/page',
+      method: 'get',
+      params: data
+    })
+  }
+  static marketShopSelector(data) {
+    return request({
+      url: '/sp/market/shop/selector',
+      method: 'get',
+      params: data
+    })
+  }
+}
+// 调用方式
+import SevMarketShop from '@/api/market/shop'
+SevMarketShop.marketShopPage({}).then(() => {})
 ```
