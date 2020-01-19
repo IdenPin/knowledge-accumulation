@@ -93,17 +93,18 @@ module.exports = {
 ##### 图片 `images`
 ##### 样式 `styles`
 将样式按照模块划分到不同的文件中，然后统一导入到`index.scss`中
-```js
-// ├── element-ui.scss
-// ├── hack.scss
-// ├── index.scss
-// ├── laytpl.scss
-// ├── mixin.scss
-// ├── nprogress.scss
-// ├── resize.scss
-// ├── sidebar.scss
-// ├── transition.scss
-// └── variables.scss
+```css
+├── element-ui.scss
+├── hack.scss
+├── index.scss
+├── laytpl.scss
+├── mixin.scss
+├── nprogress.scss
+├── resize.scss
+├── sidebar.scss
+├── transition.scss
+└── variables.scss
+
 @import 'resize';
 @import 'variables';
 @import 'transition';
@@ -114,3 +115,56 @@ module.exports = {
 @import 'hack';
 ```
 #### 如何管理 `vue-router` ？
+在`src`目录下创建一个`router`文件夹，`router`文件夹下面再创建一个`modules`文件夹和`index.js`入口文件。
+`modules`文件是用来存放不同子模块下面的路由。
+
+```html
+├── index.js
+└── modules
+    ├── moduleA
+    ├── moduleB
+    └── moduleC
+```
+
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import ModuleA from '@/router/moduleA
+import ModuleB from '@/router/moduleB
+import ModuleC from '@/router/moduleC
+Vue.use(VueRouter)
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
+  ModuleA,
+  ModuleB,
+  ModuleC,
+  ...
+]
+
+const router = new VueRouter({
+  model: 'hash',
+  routes,
+  base: process.env.BASE_URL,
+  props: true
+})
+export default router
+```
+
+#### 关于 `components`
+根据组件复用情况，一般分为全局公共组件和业务组件。全局组件建议存放在 `@/components`中，各业务模块如果只有当前业务模块使用就直接在`views`文件夹业务模块中创建`@/views/bizA/components`中。
+
+#### Axios 请求分装和接口管理
+如果业务简单页面请求非常少直接使用axios也没有什么大影响。但是在一个大项目中对 `Axios` 进行二次封装尤为重要，想象下如果一个项目有上百个请求，突然有一天后端开发人员说需要在所有请求头加入一个字段，如果接口没有做统一管理，修改调整一百多个接口是多么痛苦的。所以我建议不管大项目小项axios请求二次封装是很有必要的。
+
+一般会在`@/utils`目录下创建一个`request.js`用来封装统一请求工具函数，`@/api`目录下用来存放接口协议。如果业务发在也建议将api文件夹下面的文件按照模块拆分。
+
+```html
+├── moduleA
+├── moduleB
+└── moduleC
+
+```
