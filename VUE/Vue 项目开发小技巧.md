@@ -167,7 +167,7 @@ export default router
 └── moduleC
 ```
 
-封装 `request.js` 文件:
+**方案一：封装 `request.js` 文件**
 ```js
 import axios from 'axios'
 import qs from 'qs'
@@ -260,7 +260,84 @@ export default class SevMarketShop {
 import SevMarketShop from '@/api/market/shop'
 SevMarketShop.marketShopPage({}).then(() => {})
 ```
-序列化的意义是将复杂数据类型拍平，转化成 `a=123&name=pdeng`
+**方案二：通过extends继承封装**
+```js
+import axios from 'axios'
+import qs from 'qs'
+class BaseModule {
+  constructor () {
+    this.$http = axios.create({
+      baseUrl: 'https://api.forcs.com'
+    })
+    this.dataMethodDefaults = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: [function (data) {
+        return qs.stringify(data)
+      }]
+    }
+  }
+  
+  get (url, config = {}) {
+    return this.$http.get(url, config)
+  }
+  
+  post (url, data = undefined, config = {}) {
+    return this.$http.post(url, data, { ...this.dataMethodDefaults, ...config })
+  }
+  
+  put (url, data = undefined, config = {}) {
+    return this.$http.put(url, data, { ...this.dataMethodDefaults, ...config })
+  }
+  
+  delete (url, config = {}) {
+    return this.$http.delete(url, config)
+  }
+}
+export default BaseModule
+```
+子模块继承`BaseModule`父类
+```js
+import BaseModule from '@/utils/request'
+class UserManager extends BaseModule {
+  constructor(){
+    super()
+  }
+  getUsers(){
+    return this.get('/users/all')
+  }
+  getUser(id){
+    if (!id) {
+      return Promise.reject(new Error(`getUser：id(${id})无效`))
+    }
+    return this.get(`/users/${id}`)
+  }
+}
+export default new UserManager()
+```
+多域名可以删掉`request.js`中的`baseURL`，新建一个`base.js`用来管理不同的域名
+```js
+export default const domain = {    
+    a: 'https://a.com/api/v1',    
+    b: 'http://b.com/api'
+}
+```
+```js
+import domain from '@/utils/domain'
+...
+  getUsers(){
+    return this.get(`${domain.a}/users/all`)
+  }
+  getUser(id){
+    if (!id) {
+      return Promise.reject(new Error(`getUser：id(${id})无效`))
+    }
+    return this.get(`${domain.b}/users/${id}`)
+...
+```
+序列化成URL的形式，以&进行拼接
+使用qs序列化的意义是将复杂数据类型拍平，转化成 `a=123&name=pdeng`
 ```js
 <template>
   <div></div>

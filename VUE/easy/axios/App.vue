@@ -1,11 +1,21 @@
 <template>
-  <div></div>
+  <div>
+    <input type="text" v-model="listVal" @keyup="fetch">
+    <div v-for="(item,index) in list" :key="index">
+      {{item.name}}
+    </div>
+  </div>
 </template>
 <script>
 import qs from 'qs'
+import axios from 'axios'
+// let cancel
+// let CancelToken
 export default {
   data() {
     return {
+      list: [],
+      listVal: '',
       foo : {
         name: 'pdeng',
         age: 20,
@@ -22,9 +32,22 @@ export default {
     }
   },
   mounted() {
-    window.console.log('data', this.foo)
-    window.console.log('JSON', this.JSON)
-    window.console.log('QS', this.QS)
-  }
+    // window.console.log('data', this.foo)
+    // window.console.log('JSON', this.JSON)
+    // window.console.log('QS', this.QS)
+    this.fetch()
+    this.fetch()
+    this.fetch()
+    this.fetch()
+  },
+  methods: {
+    async fetch(){
+      const instance = axios.create();
+      instance.CancelToken = axios.CancelToken;
+      instance.isCancel = axios.isCancel;
+      const {data} = await axios.get('http://api.jirengu.com/fm/getChannels.php').catch(function(){})
+      this.list = data.channels
+    }
+  },
 }
 </script>
