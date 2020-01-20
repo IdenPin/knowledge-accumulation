@@ -1,6 +1,7 @@
 <template>
   <div>
-    <input type="text" v-model="listVal" @keyup="fetch">
+    <p>{{listVal}}</p>
+    <input type="text" :value="listVal" @input="listVal = $event.target.value">
     <div v-for="(item,index) in list" :key="index">
       {{item.name}}
     </div>
@@ -36,11 +37,11 @@ export default {
     // window.console.log('JSON', this.JSON)
     // window.console.log('QS', this.QS)
     this.fetch()
-    this.fetch()
-    this.fetch()
-    this.fetch()
   },
   methods: {
+    inputFn(v) {
+      window.console.log('v',v)
+    },
     async fetch(){
       const instance = axios.create();
       instance.CancelToken = axios.CancelToken;

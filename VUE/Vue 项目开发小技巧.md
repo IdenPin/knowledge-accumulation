@@ -137,12 +137,16 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: () => import('@/views/home'),
+    meta: {
+      title: '首页',
+      auth: true
+    }
   },
-  ModuleA,
-  ModuleB,
-  ModuleC,
-  ...
+  ...ModuleA,
+  ...ModuleB,
+  ...ModuleC,
+  // ...
 ]
 
 const router = new VueRouter({
@@ -150,6 +154,14 @@ const router = new VueRouter({
   routes,
   base: process.env.BASE_URL,
   props: true
+})
+
+// 路由变化时
+router.beforeEach((to, from, next) => {    
+  if (document.title !== to.meta.title) {        
+      document.title = to.meta.title;    
+  }    
+  next()
 })
 export default router
 ```
