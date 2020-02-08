@@ -66,5 +66,10 @@ var GetMin = /** @class */ (function () {
 var getMinNumber = new GetMin();
 getMinNumber.add(1);
 getMinNumber.add(4);
-getMinNumber.add(2);
+getMinNumber.add(8);
 getMinNumber.min();
+function fn(arg) {
+    console.log(arg.length);
+    return arg;
+}
+fn('pdeng');
