@@ -1,4 +1,4 @@
-#### 深拷贝 于 浅拷贝
+#### 深拷贝 与 浅拷贝
 数据类型分为基本类型和引用类型，对基本类型的拷贝就是对值复制进行一次拷贝，而对于引用类型来说，拷贝的不是值，而是值的地址，最终两个变量的地址指向的是同一个值。
 ```js
 var a = 1
@@ -18,7 +18,9 @@ console.log(obj1.name)  // pdeng
   function shallowClone(o) {
     var obj = {}
     for(let i in o){
-      obj[i] = o[i]
+      if(o.hasOwnProperty(i)){
+        obj[i] = o[i]
+      }
     }
     return obj
   }
@@ -59,3 +61,11 @@ console.log(obj1.name)  // pdeng
     return JSON.parse(JSON.stringify(source))
   }
 ```
+
+
+#### 事件循环 EventLoop
+js 是单线程使用同步异步解决 js 的阻塞问题。在深入事件循环机制之前，需要先弄懂一下几个概念
+- 执行上下文 （Execution context）
+- 执行栈 (Execution stack)
+- 微任务 (micro-task)
+- 宏任务  (macro-task)
