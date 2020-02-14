@@ -1,0 +1,23 @@
+{
+  "name": "spiders",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "superagent-charset": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.16",
+    "@types/superagent": "^4.1.6",
+    "cheerio": "^1.0.0-rc.3",
+    "superagent": "^5.2.1",
+    "typescript": "^3.7.5"
+  },
+  "scripts": {
+    "dev": "ts-node ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
