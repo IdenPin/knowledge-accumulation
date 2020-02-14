@@ -52,7 +52,6 @@ class Reptile {
   getNewContent(dataJson: dataArr[]) {
     let fileContent = {}
     if (fs.existsSync(this.filePath)){
-      console.log('---------')
       fileContent = JSON.parse(fs.readFileSync(this.filePath, "utf-8"));
     }
     return dataJson
@@ -63,6 +62,7 @@ class Reptile {
     fs.writeFileSync(this.filePath, JSON.stringify(data))
   }
 
+  // 初始化
   async init() {
     const html = await this.getHtml();
     const jsonInfo = this.getJsonInfo(html);
@@ -70,6 +70,7 @@ class Reptile {
     this.writeFile(fileContent);
   }
 
+  // 入口
   constructor() {
     this.init();
   }
