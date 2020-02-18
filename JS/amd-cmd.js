@@ -2,7 +2,7 @@
 !function(){}()
 
 
-// amd->define  cmd->define commonjs->module.exports
+// AMD->define  CMD->define commonjs->module.exports
 (function(global, factory){
   if (typeof exports === "object" && typeof module !== "undefined") {
     module.exports = factory
@@ -10,7 +10,7 @@
     if(typeof define === "function" && define.amd){
       define(factory)
     }else{
-      global = factory()
+      global.biz = factory()
     }
   }
 })(this, function() {
