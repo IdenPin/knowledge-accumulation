@@ -1,0 +1,17 @@
+{
+  "name": "express-auth",
+  "version": "1.0.0",
+  "description": "1. npm init -y node项目初始化 2. npm i express@next -D 3. 创建index.js主文件 4. 修改package.json文件，使用nodemon运行",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^5.0.0-alpha.7",
+    "mongoose": "^5.9.1"
+  }
+}

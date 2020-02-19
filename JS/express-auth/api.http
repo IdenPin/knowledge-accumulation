@@ -1,0 +1,20 @@
+@URL = http://localhost:3000/api
+@json = content-type: application/json
+###
+GET {{URL}}
+
+### 注册
+POST {{URL}}/register
+{{json}}
+
+{  
+  "username": "pdeng",
+  "password": "123123"
+}
+
+### 登录
+POST {{URL}}/login
+
+
+### 获取用户列表
+GET {{URL}}/users
