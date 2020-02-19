@@ -57,10 +57,13 @@ app.post("/api/login", async function(req, res) {
   }
 });
 
+const authMiddleWare = function(req, res) {
+  const token = req.headers.authorization.split("Bearer ").pop();
+  req.token = token
+}
 
-app.get('/api/profile', async function(req, res){
-  const token = req.headers.authorization.split("Bearer ").pop()
-  const {id} = JWT.verify(token, PRIVATE_KEY)
+app.get('/api/profile',authMiddleWare, async function(req, res){
+  const {id} = JWT.verify(req.token, PRIVATE_KEY)
   const data = await User.findById(id)
   res.send({
     code: 0,
