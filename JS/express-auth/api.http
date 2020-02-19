@@ -23,3 +23,7 @@ POST {{URL}}/login
 
 ### 获取用户列表
 GET {{URL}}/users
+
+### 获取个人信息
+GET {{URL}}/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNGQ1OWJlMDMzOGQwMTMzY2ZmZjU1YyIsImlhdCI6MTU4MjEyODQ3OH0.RjDiermuV7clQWENSXgXVBbiOiamiFbbE2I4hO91TGw
