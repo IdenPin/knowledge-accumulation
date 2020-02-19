@@ -14,7 +14,12 @@ POST {{URL}}/register
 
 ### 登录
 POST {{URL}}/login
+{{json}}
 
+{  
+  "username": "pdeng",
+  "password": "123123"
+}
 
 ### 获取用户列表
 GET {{URL}}/users
