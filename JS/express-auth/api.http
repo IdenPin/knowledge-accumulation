@@ -17,7 +17,7 @@ POST {{URL}}/login
 {{json}}
 
 {  
-  "username": "pdeng1",
+  "username": "pdeng",
   "password": "123123"
 }
 
@@ -26,4 +26,4 @@ GET {{URL}}/users
 
 ### 获取个人信息
 GET {{URL}}/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNGQ2NTNiMzlhYTJkMWZhNGNiMmY5YyIsImlhdCI6MTU4MjEzMDU1M30.yZP_uN9Xwr8oKRgJNUxGIjuTHTWl4GxKSirciAO9QUY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNGY4NjcxNTBkODYxOTE3N2NlYjY2MCIsImlhdCI6MTU4MjI3MDI4NH0.iqOg3JxF-JomtTBb0WBKYRhfh7k3G0T7O7HU5xph-ck

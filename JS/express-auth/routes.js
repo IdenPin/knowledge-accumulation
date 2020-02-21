@@ -70,12 +70,22 @@ const PRIVATE_KEY = "justdoit";
   };
 
   app.get("/api/profile", authMiddleWare, async function(req, res) {
-    const { id } = JWT.verify(req.token, PRIVATE_KEY);
-    const data = await User.findById(id);
-    res.send({
-      code: 0,
-      data: data,
-      msg: "用户个人信息返回成功"
-    });
+    try {
+       const { id } = JWT.verify(req.token, PRIVATE_KEY);
+       const data = await User.findById(id);
+       if (data) {
+         res.send({
+           code: 0,
+           data: data,
+           msg: "用户个人信息返回成功"
+         });
+       }
+    } catch (error) {
+       res.send({
+         code: -1,
+         data: null,
+         msg: error.message
+       });
+    }
   });
 }
