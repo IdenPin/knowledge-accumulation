@@ -64,8 +64,12 @@ console.log(obj1.name)  // pdeng
 
 
 #### 事件循环 EventLoop
+拓展：https://www.bilibili.com/video/av68998172?p=26
 js 是单线程使用同步异步解决 js 的阻塞问题。在深入事件循环机制之前，需要先弄懂一下几个概念
 - 执行上下文 （Execution context）
 - 执行栈 (Execution stack)
 - 微任务 (micro-task)
+  Promise.then, process.nextTick
 - 宏任务  (macro-task)
+  主体 script, setTimeout, setInterval
+  
