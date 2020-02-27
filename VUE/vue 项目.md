@@ -1,4 +1,4 @@
-### Vue 项目开发步骤
+### Vue 项目开发套路
 
 #### 项目初始化
 1. 安装 `@vue/cli` 脚手架
@@ -71,6 +71,8 @@
     `vue.config.js`文件添加如下配置
 
     ```js
+
+    // 方案一
     ...
     configureWebpack: {
         resolve: {
@@ -81,6 +83,15 @@
         }
     }
     ...
+
+    // 方案二
+    chainWebpack (config) {
+        ...
+        config.resolve.alias
+        .set('@', path.resolve('src'))
+        .set('@@', path.resolve('src/assets'))
+        ...
+    }
     ```
 
 3. 项目配置支持`iconfont`字体图标
