@@ -1,9 +1,10 @@
 const express = require('express')
-
+const cors = require("cors");
 const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 // 实例化express创建服务
 const app = new express();
+app.use(cors());
 app.use(express.json());
 require('./routes')(app)
 

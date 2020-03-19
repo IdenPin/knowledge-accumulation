@@ -15,6 +15,18 @@
     ```
 3. 配置 `Vue` 路由
 4. 配置 `Element-UI` 组件库
+  - 主题定制
+    ```node
+    npm i element-theme -D
+    npm i element-theme-chalk -D
+    et -h 查看帮助
+    // 初始化主题变量
+    et -i src/assets/style/element-variables.scss
+    // 修改变量自动编译主题
+    et -c src/assets/style/element-variables.scss -o src/assets/style/theme/ -m --watch
+    ```
+
+
 5. 配置 `Axios` 库
 6. 初始化 `git`远程仓库并托管到远端仓库
     ```js

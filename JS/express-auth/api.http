@@ -8,7 +8,7 @@ POST {{URL}}/register
 {{json}}
 
 {  
-  "username": "pdeng",
+  "username": "duban",
   "password": "123123"
 }
 
@@ -17,12 +17,17 @@ POST {{URL}}/login
 {{json}}
 
 {  
-  "username": "pdeng",
+  "username": "duban",
   "password": "123123"
 }
 
 ### 获取用户列表
 GET {{URL}}/users
+
+### 获取用户菜单
+GET {{URL}}/menu
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNzJlOTRjYzFjYTk3Y2ZiYTQ2OTA4MyIsImlhdCI6MTU4NDU4OTI3MX0.fU19fYaJUWWppEetEmlWfVmbje3C85sRboMqxNYV4gs
+
 
 ### 获取个人信息
 GET {{URL}}/profile
