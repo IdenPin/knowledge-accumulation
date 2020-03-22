@@ -100,192 +100,212 @@ const PRIVATE_KEY = "justdoit";
           code: 0,
           msg: "操作成功！",
           data: [
-            // {
-            //   path: "/work-manage",
-            //   name: "WorkManage",
-            //   meta: {
-            //     title: "工作管理",
-            //     icon: "nested"
-            //   }
-            // },
-            // {
-            //   path: "/deal-upload",
-            //   name: "DealUpload",
-            //   meta: {
-            //     title: "处罚信息上报",
-            //     icon: "nested"
-            //   }
-            // },
             {
               path: "/statistic-analyze",
-              name: "StatisticAnalyze",
-              redirect: "/statistic-analyze/burn",
-              meta: {
-                title: "统计分析",
-                icon: "list"
-              },
+              name: "统计分析",
               children: [
                 {
                   path: "burn",
-                  name: "Burn",
-                  meta: { title: "垃圾焚烧", icon: "list" }
+                  name: '垃圾焚烧',
+                  // children: [
+                  //     {
+                  //       path: 'cs',
+                  //       name: '测试1',
+                  //     },
+                  //     {
+                  //       path: 'bs',
+                  //       name: '测试2',
+                  //     }
+                  // ]
                 },
                 {
                   path: "city28",
-                  name: "City28",
-                  meta: { title: `"2+26"城市`, icon: "list" }
+                  name: `"2+26"城市`
                 },
                 {
                   path: "fw-plains",
-                  name: "FwPlanins",
-                  meta: { title: "汾渭平原", icon: "list" }
+                  name: '汾渭平原'
                 }
               ]
             },
-            {
-              path: "/white-manage",
-              name: "DealUpload",
-              meta: {
-                title: "白名单管理",
-                icon: "nested"
-              }
-            }
+            // {
+            //   path: "/work-manage",
+            //   name: '工作管理',
+            // },
+            // {
+            //   path: "/deal-upload",
+            //   name: "处罚信息上报",
+            // },
+            // {
+            //   path: "/white-manage",
+            //   name:'白名单管理'
+            // }
           ]
+          // data: [
+          //   // {
+          //   //   path: "/work-manage",
+          //   //   name: "WorkManage",
+          //   //   meta: {
+          //   //     title: "工作管理",
+          //   //     icon: "nested"
+          //   //   }
+          //   // },
+          //   // {
+          //   //   path: "/deal-upload",
+          //   //   name: "DealUpload",
+          //   //   meta: {
+          //   //     title: "处罚信息上报",
+          //   //     icon: "nested"
+          //   //   }
+          //   // },
+          //   {
+          //     path: "/statistic-analyze",
+          //     name: "StatisticAnalyze",
+          //     redirect: "/statistic-analyze/burn",
+          //     meta: {
+          //       title: "统计分析",
+          //       icon: "menu-icon1"
+          //     },
+          //     children: [
+          //       {
+          //         path: "burn",
+          //         name: "Burn",
+          //         meta: { title: "垃圾焚烧", icon: "tree-icon" }
+          //       },
+          //       {
+          //         path: "city28",
+          //         name: "City28",
+          //         meta: { title: `"2+26"城市`, icon: "tree-icon" }
+          //       },
+          //       {
+          //         path: "fw-plains",
+          //         name: "FwPlanins",
+          //         meta: { title: "汾渭平原", icon: "tree-icon" }
+          //       }
+          //     ]
+          //   },
+          //   {
+          //     path: "/",
+          //     children: [
+          //       {
+          //         path: "white-manage",
+          //         name: "WhiteManage",
+          //         meta: {
+          //           title: "白名单管理",
+          //           icon: "menu-icon1"
+          //         }
+          //       }
+          //     ]
+          //   }
+          // ]
         });
       }else{
         res.send({
           code: 0,
           msg: "操作成功！",
           data: [
-            // {
-            //   path: "/home",
-            //   name: "Home",
-            //   meta: {
-            //     title: '首页',
-            //     icon: 'table'
-            //   }
-            // },
+             {
+              path: "/profile",
+              name: "Profile"
+            },
             {
               path: "/system",
               name: "System",
-              redirect: "/system/user",
-              meta: {
-                title: "系统管理",
-                icon: "password"
-              },
               children: [
                 {
                   path: "role",
-                  name: "Role",
-                  meta: { title: "角色管理", icon: "ball", noCache: true }
+                  name: "SystemRole",
                 },
                 {
                   path: "user",
-                  name: "User",
-                  meta: { title: "用户管理", icon: "ball", noCache: true }
+                  name: "SystemUser",
                 },
                 {
                   path: "manage",
-                  name: "Manage",
-                  meta: { title: "组织管理", icon: "ball", noCache: true }
+                  name: "SystemManage",
                 },
                 {
                   path: "menu",
-                  name: "Menu",
-
-                  meta: { title: "菜单管理", icon: "ball", noCache: true }
+                  name: "SystemMenu",
                 }
               ]
             },
             {
               path: "/eco",
               name: "Eco",
-              meta: {
-                title: "环保生态圈",
-                icon: "international"
-              },
-              redirect: "/eco/sp-manager",
               children: [
                 {
                   path: "sp-manager",
-                  name: "Sp-manager",
-
-                  meta: { title: "服务商管理", icon: "0", noCache: true },
+                  name: "EcoSpManager",
                   children: [
                     {
                       path: "sp-manager-list",
-                      name: "Sp-manager-list",
-
-                      meta: { title: "服务商列表", icon: "0", noCache: true }
+                      name: "EcoSpManagerList",
                     },
                     {
                       path: "sp-menu-role",
-                      name: "Sp-menu-role",
+                      name: "EcoSpManagerRole",
 
-                      meta: { title: "权限配置", icon: "0", noCache: true }
                     }
                   ]
                 },
                 {
                   path: "eco-web-page",
-                  name: "Eco-web-page",
+                  name: "EcoWebPage",
 
-                  meta: { title: "Web页面", icon: "0", noCache: true },
                   children: [
                     {
                       path: "eco-page-banner",
-                      name: "Eco-page-banner",
+                      name: "EcoWebPageBanner",
 
-                      meta: { title: "首页配置", icon: "0", noCache: true }
                     },
                     {
                       path: "eco-hot-news",
-                      name: "Eco-hot-news",
+                      name: "EcoWebPageNews",
 
-                      meta: { title: "热点聚焦", icon: "0", noCache: true }
                     }
                   ]
                 }
               ]
             },
-            {
-              path: "/log",
-              name: "Log",
-              meta: {
-                title: "日志管理",
-                icon: "education"
-              },
-              children: [
-                {
-                  path: "admin",
-                  name: "Admin",
-                  meta: { title: "后端服务", icon: "ball", noCache: true }
-                },
-                {
-                  path: "web",
-                  name: "Web",
-                  meta: { title: "前端服务", icon: "ball", noCache: true }
-                }
-              ]
-            },
-            {
-              path: "/about",
-              name: "About",
-              meta: {
-                icon: "people",
-                title: "关于"
-              },
-              children: [
-                {
-                  path: "index",
-                  name: "Index",
-                  meta: {
-                    icon: "people",
-                    title: "个人设置"
-                  }
-                }
-              ]
-            }
+            // {
+            //   path: "/log",
+            //   name: "Log",
+            //   meta: {
+            //     title: "日志管理",
+            //     icon: "education"
+            //   },
+            //   children: [
+            //     {
+            //       path: "admin",
+            //       name: "Admin",
+            //       meta: { title: "后端服务", icon: "ball", noCache: true }
+            //     },
+            //     {
+            //       path: "web",
+            //       name: "Web",
+            //       meta: { title: "前端服务", icon: "ball", noCache: true }
+            //     }
+            //   ]
+            // },
+            // {
+            //   path: "/about",
+            //   name: "About",
+            //   meta: {
+            //     icon: "people",
+            //     title: "关于"
+            //   },
+            //   children: [
+            //     {
+            //       path: "index",
+            //       name: "Index",
+            //       meta: {
+            //         icon: "people",
+            //         title: "个人设置"
+            //       }
+            //     }
+            //   ]
+            // }
             // {
             //   path: '/external-link',
             //   name: 'ExternalLink',
