@@ -204,6 +204,10 @@ const PRIVATE_KEY = "justdoit";
           code: 0,
           msg: "操作成功！",
           data: [
+            {
+              path: '/http://www.baidu.com',
+              name: 'Baidu',
+            },
              {
               path: "/profile",
               name: "Profile"
