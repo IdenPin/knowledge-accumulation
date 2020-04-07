@@ -100,6 +100,14 @@ const PRIVATE_KEY = "justdoit";
           code: 0,
           msg: "操作成功！",
           data: [
+             {
+              path: "/work-manage",
+              name: '工作管理',
+            },
+            {
+              path: "/deal-upload",
+              name: "处罚信息上报",
+            },
             {
               path: "/statistic-analyze",
               name: "统计分析",
@@ -107,16 +115,6 @@ const PRIVATE_KEY = "justdoit";
                 {
                   path: "burn",
                   name: '垃圾焚烧',
-                  // children: [
-                  //     {
-                  //       path: 'cs',
-                  //       name: '测试1',
-                  //     },
-                  //     {
-                  //       path: 'bs',
-                  //       name: '测试2',
-                  //     }
-                  // ]
                 },
                 {
                   path: "city28",
@@ -128,76 +126,45 @@ const PRIVATE_KEY = "justdoit";
                 }
               ]
             },
-            // {
-            //   path: "/work-manage",
-            //   name: '工作管理',
-            // },
-            // {
-            //   path: "/deal-upload",
-            //   name: "处罚信息上报",
-            // },
-            // {
-            //   path: "/white-manage",
-            //   name:'白名单管理'
-            // }
+            {
+              path: "/white-manage",
+              name: "白名单管理",
+              children: [
+                {
+                  path: "city28",
+                  name: `"2+26"城市`
+                },
+                {
+                  path: "fw-plains",
+                  name: '汾渭平原'
+                }
+              ]
+            },
+            {
+              path: '/account-report',
+              name: '统计报表',
+            },
+            {
+              path: '/user-manage',
+              name: '用户管理',
+            },
+            {
+              path: '/company-search',
+              name: '企业用户查询',
+            },
+            {
+              path: '/system-manage',
+              name: '系统管理',
+            },
+            {
+              path: '/work-notice',
+              name: '工作通知',
+            },
+            {
+              path: '/user-info',
+              name: '我的信息',
+            }
           ]
-          // data: [
-          //   // {
-          //   //   path: "/work-manage",
-          //   //   name: "WorkManage",
-          //   //   meta: {
-          //   //     title: "工作管理",
-          //   //     icon: "nested"
-          //   //   }
-          //   // },
-          //   // {
-          //   //   path: "/deal-upload",
-          //   //   name: "DealUpload",
-          //   //   meta: {
-          //   //     title: "处罚信息上报",
-          //   //     icon: "nested"
-          //   //   }
-          //   // },
-          //   {
-          //     path: "/statistic-analyze",
-          //     name: "StatisticAnalyze",
-          //     redirect: "/statistic-analyze/burn",
-          //     meta: {
-          //       title: "统计分析",
-          //       icon: "menu-icon1"
-          //     },
-          //     children: [
-          //       {
-          //         path: "burn",
-          //         name: "Burn",
-          //         meta: { title: "垃圾焚烧", icon: "tree-icon" }
-          //       },
-          //       {
-          //         path: "city28",
-          //         name: "City28",
-          //         meta: { title: `"2+26"城市`, icon: "tree-icon" }
-          //       },
-          //       {
-          //         path: "fw-plains",
-          //         name: "FwPlanins",
-          //         meta: { title: "汾渭平原", icon: "tree-icon" }
-          //       }
-          //     ]
-          //   },
-          //   {
-          //     path: "/",
-          //     children: [
-          //       {
-          //         path: "white-manage",
-          //         name: "WhiteManage",
-          //         meta: {
-          //           title: "白名单管理",
-          //           icon: "menu-icon1"
-          //         }
-          //       }
-          //     ]
-          //   }
-          // ]
         });
       }else{
         res.send({
