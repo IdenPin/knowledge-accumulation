@@ -20,7 +20,7 @@ cookie 获取：
 // 获取当前时间戳
 const nowTime = new Date().getTime() 
 // 设置过期时间
-const expiresTime = new Date(`${nowTime}`${30*24*60*60*10000})
+const expiresTime = new Date(`${nowTime}`${30*24*60*60*1000})
 document.cookie = `name=张三;expires=${expiresTime.toUTCString()}`
 
 /**
@@ -61,7 +61,7 @@ ClientA  --->  `第一次请求：username/password`  --->  Server  ---> `向用
 
 #### token 
 如果不用`session`如何确保数据是服务器生成的呢？怎样去验证呢？用户信息存在哪？于是有人想到用一定的加密规则生成字符串，服务器只验证不存储，只要验证通过说明是自己生成的，用户信息存储在加密字符串中。这样性能和`cors`都能解决。这个加密字符串就是`token`。引入`token`的意义是，因为session服务生成以后还要将生成的`sessionId`存储在内存中占用内存。所以引入了`token`，它的核心是在服务器收到用户名和密码后通过算法生成`token`返回给了客户端（服务器不记录token）,下次请求客户端只需要携带`token`来请求服务器，服务器收到`token`后通过算法验证“锁”和“钥匙”是否匹配。
-
+https://www.bilibili.com/video/BV1tJ411B7yJ?p=3
 
 
 #### cookie 和 session 区别 ？
