@@ -1,3 +1,33 @@
+class Observer {
+  constructor(data) {
+    this.observer(data)
+  }
+  observer(data) {
+    if(data && typeof data === 'object'){
+      // 如果是对象
+      for(let key in data) {
+        this.defineReactive(data, key, data[key])
+      }
+    }
+  }
+  defineReactive(data, key, value) {
+    this.observer(value)
+    Object.defineProperty(data, key, {
+      get(){
+        return value
+      },
+      set: (newVal) =>{
+        console.log(newVal, value)
+        if(newVal !== value){
+          this.observer(newVal)
+          value = newVal
+        }
+      }
+    })
+  }
+}
+
+
 class Compiler{
   constructor(el, vm) {
     this.el = this.isElementNode(el) ? el : document.querySelector(el)
@@ -20,12 +50,11 @@ class Compiler{
     // 类数组
     let attributes = node.attributes  // type=text v-model=msg
     ;[...attributes].forEach(attr => {
-      let {name, value:expr} = attr   // v-model = "school.msg"
+      let {name, value:expr} = attr   // v-model = "time.msg"
       if(this.isDirective(name)) {  
         // 指令节点
         const [,directive] = name.split('-')
         CompileUtil[directive](node, expr, this.vm)
-        console.log('attr：', attr)
       }
     })
   }
@@ -34,7 +63,7 @@ class Compiler{
     let content = node.textContent
     if(/\{\{(.+?)\}\}/.test(content)){
       // 找到所有文本
-      console.log('text：', content)
+      CompileUtil['text'](node, content, this.vm)
     }
   }
   // 核心编译方法
@@ -69,16 +98,36 @@ class Compiler{
   }
 }
 CompileUtil = {
+  getVal(vm, expr){
+    // [time, msg]
+    return expr.split('.').reduce((acc, v) => {
+      return acc[v]
+    }, vm.$data)
+  },
   // 节点、表达式、当前实例
   model(node, expr, vm) {
-    // console.log(node, expr, vm)
-    // https://www.bilibili.com/video/BV1k4411C73b
+    // expr -> tmie.msg
+    let value = this.getVal(vm, expr)
+    this.updater['modelUpdater'](node, value)
   },
   html() {
 
   },
-  text(){
-
+  text(node, expr, vm){ // {{a}} {{b}}
+    let value = expr.replace(/\{\{(.+?)\}\}/g, (...arg) => {
+      return this.getVal(vm, arg[1])
+    })
+    this.updater['textUpdater'](node, value)
+  },
+  updater: {
+    // 把数据插入到节点中
+    modelUpdater(node, value) {
+      node.value = value
+    },
+    // 处理文本节点
+    textUpdater(node, value){
+      node.textContent = value
+    }
   }
 }
 class Vue {
@@ -86,6 +135,9 @@ class Vue {
     this.$el = options.el
     this.$data = options.data
     if(this.$el) {
+      // 使用 Object.defineProperty 重新定义数据
+      new Observer(this.$data)
+      // 编译模板
       new Compiler(this.$el, this)
     }
   }
