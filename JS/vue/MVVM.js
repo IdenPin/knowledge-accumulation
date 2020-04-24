@@ -1,12 +1,9 @@
-
 class Compiler{
   constructor(el, vm) {
     this.el = this.isElementNode(el) ? el : document.querySelector(el)
-
     // 把当前节点元素获取到、放到内存中
     this.vm = vm
     let fragment = this.node2Fragment(this.el)
-
     // 把节点内容替换
 
     // 用数据编译模板
@@ -27,7 +24,8 @@ class Compiler{
       if(this.isDirective(name)) {  
         // 指令节点
         const [,directive] = name.split('-')
-        CompileUtil[directive](node, expr), this.vm
+        CompileUtil[directive](node, expr, this.vm)
+        console.log('attr：', attr)
       }
     })
   }
@@ -36,7 +34,7 @@ class Compiler{
     let content = node.textContent
     if(/\{\{(.+?)\}\}/.test(content)){
       // 找到所有文本
-      console.log('text', content)
+      console.log('text：', content)
     }
   }
   // 核心编译方法
@@ -70,11 +68,11 @@ class Compiler{
     return node.nodeType === 1
   }
 }
-
 CompileUtil = {
   // 节点、表达式、当前实例
   model(node, expr, vm) {
-
+    // console.log(node, expr, vm)
+    // https://www.bilibili.com/video/BV1k4411C73b
   },
   html() {
 
@@ -83,7 +81,6 @@ CompileUtil = {
 
   }
 }
-
 class Vue {
   constructor(options) {
     this.$el = options.el

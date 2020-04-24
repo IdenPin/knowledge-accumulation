@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mvvm</title>
+  <script src="./MVVM.js"></script>
+</head>
+<body>
+  <div id="app">
+    <span>{{name}}</span>
+    <input v-model="msg" type="text"/>
+    <ul>
+      <li>1</li>
+      <li>2</li>
+    </ul>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        time: {
+          name: 'pdeng',
+          msg: 'hello'
+        }
+      }
+    })
+    // console.log(vm)
+  </script>
+</body>
+</html>
