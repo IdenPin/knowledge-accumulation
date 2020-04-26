@@ -101,9 +101,11 @@ class Compiler{
     ;[...attributes].forEach(attr => {
       let {name, value:expr} = attr   // v-model = "time.msg"
       if(this.isDirective(name)) {  
-        // 指令节点
-        const [,directive] = name.split('-')
-        CompileUtil[directive](node, expr, this.vm)
+        // 指令节点  
+        const [, directive] = name.split('-')
+        //  v-on:click  
+        const [directiveName, eventName] = directive.split(':')
+        CompileUtil[directiveName](node, expr, this.vm, eventName)
       }
     })
   }
@@ -179,8 +181,20 @@ CompileUtil = {
     let value = this.getVal(vm, expr)
     fn(node, value)
   },
-  html() {
-
+  on(node, expr, vm, eventName){
+    // v-on:click = changeName
+    node.addEventListener(eventName, (e) => {
+      vm[expr].call(vm, e)
+    })
+  },
+  html(node, expr, vm) {
+    // v-html="message"
+    let fn = this.updater['htmlUpdater']
+    new Watcher(vm, expr, (newVal) => {
+      fn(node, newVal)
+    })
+    let value = this.getVal(vm, expr)
+    fn(node, value)
   },
   getContentVal(vm, expr) {
     // 遍历表达式 将内容重新替换成一个完整的内容返回回去
@@ -209,6 +223,9 @@ CompileUtil = {
     // 处理文本节点
     textUpdater(node, value){
       node.textContent = value
+    },
+    htmlUpdater(node, value) {
+      node.innerHTML = value
     }
   }
 }
@@ -216,12 +233,31 @@ class Vue {
   constructor(options) {
     this.$el = options.el
     this.$data = options.data
+    let computed = options.computed
+    let methods = options.methods
     if(this.$el) {
       // 使用 Object.defineProperty 重新定义数据
       new Observer(this.$data)
+    
+
+      for(let key in computed){
+        // 有依赖关系
+        Object.defineProperty(this.$data, key, {
+          get: () =>{
+            return computed[key].call(this)
+          }
+        })
+      }
+      for(let key in methods){
+        Object.defineProperty(this, key, {
+          get(){
+            return methods[key]
+          }
+        })
+      }
+
       // 把 vm 上的取值操作都代理到 vm.$data 上
       this.proxyVm(this.$data)
-
 
       // 编译模板
       new Compiler(this.$el, this)

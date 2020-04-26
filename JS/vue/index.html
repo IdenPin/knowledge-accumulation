@@ -16,6 +16,9 @@
         <li>1</li>
         <li>2</li>
       </ul>
+      <div>{{getStudentInfo}}</div>
+      <div v-html="message"></div>
+      <button v-on:click="changeName">改变名字</button>
     </div>
     <script>
       const vm = new Vue({
@@ -26,6 +29,17 @@
             name: "pdeng",
             msg: "hello",
           },
+          message:'<h1>你好</h1>'
+        },
+        computed: {
+          getStudentInfo() {
+            return `姓名：${this.time.name} 年龄：${this.age}`
+          }
+        },
+        methods: {
+          changeName(e) {
+            this.time.name = '韩嘉琛同学'
+          }
         },
       });
       console.log(vm);
