@@ -1,3 +1,54 @@
+class Vue {
+  constructor(options) {
+    this.$el = options.el
+    this.$data = options.data
+    let computed = options.computed
+    let methods = options.methods
+    if (this.$el) {
+      // 使用 Object.defineProperty 重新定义数据
+      new Observer(this.$data)
+
+      for (let key in computed) {
+        // 有依赖关系
+        Object.defineProperty(this.$data, key, {
+          get: () => {
+            return computed[key].call(this)
+          }
+        })
+      }
+
+      for (let key in methods) {
+        Object.defineProperty(this, key, {
+          get() {
+            return methods[key]
+          }
+        })
+      }
+
+      // 把 vm 上的取值操作都代理到 vm.$data 上
+      this.proxyVm(this.$data)
+
+      // 编译模板
+      new Compiler(this.$el, this)
+    }
+  }
+  proxyVm(data) {
+    // 38.17
+    for (let key in data) {
+      Object.defineProperty(this, key, {
+        get() {
+          return data[key]
+        },
+        set(newVal) {
+          data[key] = newVal
+        }
+      })
+    }
+  }
+}
+
+
+
 // 观察者（发布订阅） 
 class Dep {
   constructor() {
@@ -16,7 +67,6 @@ class Dep {
 
 
 
-
 class Watcher {
   constructor(vm, expr, cb) {
     this.vm = vm
@@ -28,19 +78,17 @@ class Watcher {
   get() {
     Dep.target = this
     let value = CompileUtil.getVal(this.vm, this.expr)
-    Dep.target = null 
+    Dep.target = null
     return value
   }
   update() {
     // 更新操作 数据变化后 会调用观察者的 update 方法
     let newVal = CompileUtil.getVal(this.vm, this.expr)
-    if(newVal !== this.oldVal) {
+    if (newVal !== this.oldVal) {
       this.cb(newVal)
     }
   }
 }
-
-
 
 
 class Observer {
@@ -48,9 +96,9 @@ class Observer {
     this.observer(data)
   }
   observer(data) {
-    if(data && typeof data === 'object'){
+    if (data && typeof data === 'object') {
       // 如果是对象
-      for(let key in data) {
+      for (let key in data) {
         this.defineReactive(data, key, data[key])
       }
     }
@@ -60,13 +108,13 @@ class Observer {
     // 给每个属性都加上一个具有发布订阅的功能
     let dep = new Dep()
     Object.defineProperty(data, key, {
-      get(){
+      get() {
         // 创建 watcher 时，会去到对应的内容， 并且把 watcher 放到全局
         Dep.target && dep.addSub(Dep.target)
         return value
       },
-      set: (newVal) =>{
-        if(newVal !== value){
+      set: (newVal) => {
+        if (newVal !== value) {
           this.observer(newVal)
           value = newVal
           dep.notify()
@@ -77,7 +125,8 @@ class Observer {
 }
 
 
-class Compiler{
+
+class Compiler {
   constructor(el, vm) {
     this.el = this.isElementNode(el) ? el : document.querySelector(el)
     // 把当前节点元素获取到、放到内存中
@@ -91,53 +140,53 @@ class Compiler{
     this.el.appendChild(fragment)
   }
   // 判断是否是指令
-  isDirective(attrName){
+  isDirective(attrName) {
     return attrName.startsWith('v-')
   }
   // 编译元素
   compileElement(node) {
     // 类数组
     let attributes = node.attributes  // type=text v-model=msg
-    ;[...attributes].forEach(attr => {
-      let {name, value:expr} = attr   // v-model = "time.msg"
-      if(this.isDirective(name)) {  
-        // 指令节点  
-        const [, directive] = name.split('-')
-        //  v-on:click  
-        const [directiveName, eventName] = directive.split(':')
-        CompileUtil[directiveName](node, expr, this.vm, eventName)
-      }
-    })
+      ;[...attributes].forEach(attr => {
+        let { name, value: expr } = attr   // v-model = "time.msg"
+        if (this.isDirective(name)) {
+          // 指令节点  
+          const [, directive] = name.split('-')
+          //  v-on:click  
+          const [directiveName, eventName] = directive.split(':')
+          CompileUtil[directiveName](node, expr, this.vm, eventName)
+        }
+      })
   }
   // 编译文本
   compileText(node) {
     let content = node.textContent
-    if(/\{\{(.+?)\}\}/.test(content)){
+    if (/\{\{(.+?)\}\}/.test(content)) {
       // 找到所有文本
       CompileUtil['text'](node, content, this.vm)
     }
   }
-  // 核心编译方法
+  // 【核心编译方法】
   compile(node) {
     // 编译内存中的dom节点
     let childrenNode = node.childNodes
-    ;[...childrenNode].forEach(child => {
-      if(this.isElementNode(child)) {
-        this.compileElement(child)
-        // 元素节点 需要再把自己传进去 去遍历子节点
-        this.compile(child)
-      }else{
-        // 非元素节点[文本]
-        this.compileText(child)
-      }
-    })
+      ;[...childrenNode].forEach(child => {
+        if (this.isElementNode(child)) {
+          this.compileElement(child)
+          // 1、元素节点 需要再把自己传进去 去遍历子节点
+          this.compile(child)
+        } else {
+          // 2、非元素节点
+          this.compileText(child)
+        }
+      })
   }
   // 把节点移到内存中
   node2Fragment(node) {
     // 创建一个文档碎片
     let fragment = document.createDocumentFragment()
     let firstChild
-    while(firstChild = node.firstChild) {
+    while (firstChild = node.firstChild) {
       // appendChild 具有移动性
       fragment.appendChild(firstChild)
     }
@@ -148,8 +197,11 @@ class Compiler{
     return node.nodeType === 1
   }
 }
+
+
+// 编译工具函数
 CompileUtil = {
-  getVal(vm, expr){
+  getVal(vm, expr) {
     // [time, msg]
     return expr.split('.').reduce((acc, v) => {
       return acc[v]
@@ -158,9 +210,9 @@ CompileUtil = {
   // vm.$data 'item.msg' = 'pdeng'
   setVal(vm, expr, value) {
     return expr.split('.').reduce((acc, v, index, arr) => {
-      if(arr.length === index + 1) {
+      if (arr.length === index + 1) {
         //如果是最后一项
-        return acc[v] = value 
+        return acc[v] = value
       }
       return acc[v]
     }, vm.$data)
@@ -181,7 +233,7 @@ CompileUtil = {
     let value = this.getVal(vm, expr)
     fn(node, value)
   },
-  on(node, expr, vm, eventName){
+  on(node, expr, vm, eventName) {
     // v-on:click = changeName
     node.addEventListener(eventName, (e) => {
       vm[expr].call(vm, e)
@@ -202,7 +254,7 @@ CompileUtil = {
       return this.getVal(vm, arg[1])
     })
   },
-  text(node, expr, vm){ // {{a}} {{b}}
+  text(node, expr, vm) { // {{a}} {{b}}
     let fn = this.updater['textUpdater']
     // expr -> {{age}} {{time.name}}
     let content = expr.replace(/\{\{(.+?)\}\}/g, (...arg) => {
@@ -221,59 +273,11 @@ CompileUtil = {
       node.value = value
     },
     // 处理文本节点
-    textUpdater(node, value){
+    textUpdater(node, value) {
       node.textContent = value
     },
     htmlUpdater(node, value) {
       node.innerHTML = value
-    }
-  }
-}
-class Vue {
-  constructor(options) {
-    this.$el = options.el
-    this.$data = options.data
-    let computed = options.computed
-    let methods = options.methods
-    if(this.$el) {
-      // 使用 Object.defineProperty 重新定义数据
-      new Observer(this.$data)
-    
-
-      for(let key in computed){
-        // 有依赖关系
-        Object.defineProperty(this.$data, key, {
-          get: () =>{
-            return computed[key].call(this)
-          }
-        })
-      }
-      for(let key in methods){
-        Object.defineProperty(this, key, {
-          get(){
-            return methods[key]
-          }
-        })
-      }
-
-      // 把 vm 上的取值操作都代理到 vm.$data 上
-      this.proxyVm(this.$data)
-
-      // 编译模板
-      new Compiler(this.$el, this)
-    }
-  }
-  proxyVm(data) {
-    // 38.17
-    for(let key in data) {
-      Object.defineProperty(this, key, {
-        get() {
-          return data[key]
-        },
-        set(newVal){
-          data[key] = newVal
-        }
-      })
     }
   }
 }
