@@ -123,6 +123,17 @@ CompileUtil = {
     updateFn && updateFn(node, value)
   },
 
+  setVal(vm, expr, value) {
+    // [msg.a]
+    // 收敛
+    return expr.split('.').reduce((prev,next,currentIndex) => {
+      if(currentIndex == expr.length - 1){
+        return prev[next] = value
+      }
+      return prev[next]
+    },vm.$data)
+  },
+
   // 输入框处理
   model(node, vm, expr) {
     let updateFn = this.updater['modelUpdater']
@@ -130,6 +141,11 @@ CompileUtil = {
     // 增加一个监控，数据变化了应该调用这个 watch 的 callback
     new Watcher(vm, expr, (newValue)=> {
       updateFn && updateFn(node, newValue)
+    })
+
+    node.addEventListener('input', e => {
+      let newVal = e.target.value
+      this.setVal(vm, expr, newVal)
     })
     updateFn && updateFn(node, this.getVal(vm.$data, expr))
 
